@@ -23,9 +23,6 @@ Enemy.prototype.update = function(dt) {
   if (this.x >= 505) {
     this.x = 0;
   }
-
-  // Check for collision with enemies or barrier-walls
-  checkCollision(this);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -54,16 +51,16 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(keyPress) {
   if (keyPress == 'left') {
-    player.x -= player.speed + 20;
+    this.x -= this.speed + 20;
   }
   if (keyPress == 'up') {
-    player.y -= player.speed;
+    this.y -= this.speed;
   }
   if (keyPress == 'right') {
-    player.x += player.speed + 20;
+    this.x += this.speed + 20;
   }
   if (keyPress == 'down') {
-    player.y += player.speed;
+    this.y += this.speed;
   }
 };
 
@@ -99,36 +96,6 @@ document.addEventListener('keydown', function(e) {
 function updateScoreAndLevel(score, level) {
   document.querySelector('[data-score]').innerText = score;
   document.querySelector('[data-level]').innerText = level;
-};
-
-function checkCollision(enemy) {
-  if (player.y + 131 >= enemy.y + 90 && player.x + 25 <= enemy.x + 88 && player.y + 73 <= enemy.y + 135 && player.x + 76 >= enemy.x + 11) {
-    player.x = position.x;
-    player.y = position.y;
-  }
-
-  if (player.y + 63 <= 0) {
-    player.x = position.x;
-    player.y = position.y;
-
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 505, 171);
-
-    score += 1;
-    level += 1;
-
-    increaseDifficulty(score);
-  }
-
-  if (player.y > position.y) {
-    player.y = position.y;
-  }
-  if (player.x > 402.5) {
-    player.x = 402.5;
-  }
-  if (player.x < 2.5) {
-    player.x = 2.5;
-  }
 };
 
 function increaseDifficulty(enemies) {
